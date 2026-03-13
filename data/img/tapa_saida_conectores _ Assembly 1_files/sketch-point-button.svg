@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+<g id="sketch/sketch-point-button">
+<path id="point" d="M10 13.5C8.06686 13.5 6.5 11.9331 6.5 10C6.5 8.06686 8.06686 6.5 10 6.5C11.9331 6.5 13.5 8.06686 13.5 10C13.5 11.9331 11.9331 13.5 10 13.5Z" fill="#1651B0" style="fill: var(--os-icon-accent-primary, #1651B0);"/>
+<path id="fill" fill-rule="evenodd" clip-rule="evenodd" d="M10 12.5C11.3809 12.5 12.5 11.3809 12.5 10C12.5 8.61914 11.3809 7.5 10 7.5C8.61914 7.5 7.5 8.61914 7.5 10C7.5 11.3809 8.61914 12.5 10 12.5Z" fill="white" style="fill: var(--os-icon-fill-primary--static, #FFFFFF);"/>
+</g>
+</svg>

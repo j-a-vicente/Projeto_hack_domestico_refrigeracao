@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>drawing/insert-hole-table-button</title>
+    <desc>Created with Sketch.</desc>
+    <g id="drawing/insert-hole-table-button" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-4" transform="translate(0.000000, 0.000000)">
+            <g id="Group-2" transform="translate(0.000000, 0.000000)" fill="#333333">
+                <path d="M13,4 L13,7 L16,7 L16,8 L13,8 L13,11 L16,11 L16,12 L13,12 L13,15 L16,15 L16,16 L13,16 L13,19 L12,19 L12,16 L9,16 L9,19 L8,19 L8,16 L5,16 L5,19 L4,19 L4,16 L1,16 L1,15 L4,15 L4,12 L1,12 L1,11 L4,11 L4,8 L1,8 L1,7 L4,7 L4,4 L5,4 L5,7 L8,7 L9,8 L10,7 L12,7 L12,5 L13,4 Z M4,3 L5,4 L1,4 L1,19 L16,19 L16,4 L13,4 L14,3 L17,3 L17,20 L0,20 L0,3 L4,3 Z M12,8 L9,8 L9,11 L12,11 L12,8 Z M12,15 L12,12 L9,12 L9,15 L12,15 Z M8,8 L5,8 L5,11 L8,11 L8,8 Z M8,15 L8,12 L5,12 L5,15 L8,15 Z" id="Combined-Shape"></path>
+                <path d="M8,3 C8,1 5,1 3,1 L3,2.5313085e-14 C5,-1.71299721e-14 10,2.13162821e-14 10,3 L13,3 L9,7 L5,3 L8,3 Z" id="Fill-418-Copy"></path>
+            </g>
+            <g id="simple-hole" transform="translate(7.000000, 7.000000)">
+                <polygon id="Rectangle" fill="#333333" points="-4.00593428e-32 0 11 0 13 2.16666667 13 13 3 13 -4.00593428e-32 10.8333333"></polygon>
+                <polygon id="Rectangle" fill="#FFFFFF" points="1 1 10.5 1 12 2.5 3 2.5"></polygon>
+                <polygon id="Rectangle" fill="#FFFFFF" points="3.5 3 12 3 12 12 3.5 12"></polygon>
+                <polygon id="Rectangle" fill="#FFFFFF" points="1 1.5 3 3 3 12 1 10.5"></polygon>
+                <g id="Group-3" transform="translate(4.250000, 4.000000)">
+                    <circle id="Oval" fill="#333333" cx="3.5" cy="3.5" r="3.5"></circle>
+                    <circle id="Oval" fill="#999999" cx="3.5" cy="3.5" r="3"></circle>
+                    <path d="M0.777711287,4.76232383 C0.599487935,4.37862088 0.5,3.95092877 0.5,3.5 C0.5,1.84314575 1.84314575,0.5 3.5,0.5 C4.11548182,0.5 4.68767358,0.685346755 5.16380462,1.00326959 C5.22017744,1.24303277 5.25,1.49303367 5.25,1.75 C5.25,3.54492544 3.79492544,5 2,5 C1.56765802,5 1.15503347,4.91557963 0.777711287,4.76232383 Z" id="Combined-Shape" fill="#333333"></path>
+                    <path d="M0.600202323,4.27176325 C0.534833945,4.02551108 0.5,3.76682349 0.5,3.5 C0.5,1.84314575 1.84314575,0.5 3.5,0.5 C3.90732446,0.5 4.29568891,0.581177471 4.64979768,0.728236745 C4.71516606,0.974488918 4.75,1.23317651 4.75,1.5 C4.75,3.15685425 3.40685425,4.5 1.75,4.5 C1.34267554,4.5 0.954311089,4.41882253 0.600202323,4.27176325 Z" id="Combined-Shape" fill="#FFFFFF"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>qtresources/icons/dimensions/drawing-linear-dim-circles-min-max</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="qtresources/icons/dimensions/drawing-linear-dim-circles-min-max" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="drawing-linear-dim-circles-min-max" transform="translate(1.000000, 3.000000)" fill-rule="nonzero">
+            <path d="M0.0291262619,0 L1,0.00230727439 L0.970873738,13 L0,12.9976927 L0.0291262619,0 Z M17.0291263,0 L18,0.00230727439 L17.9708737,13 L17,12.9976927 L17.0291263,0 Z M4,5 L1,2.49000001 L4,0 L4,2.00160001 L14,2.00160001 L14,0.00160000954 L17,2.49580001 L14,5.00160001 L14,3.00160001 L4,3.00160001 L4,5 Z" id="Combined-Shape" fill="#333333"></path>
+            <path d="M4.5,8 C2.56975,8 1,9.56975 1,11.5 C1,13.43025 2.56975,15 4.5,15 C6.43025,15 8,13.43025 8,11.5 C8,9.56975 6.43025,8 4.5,8 M4.5,9 C5.88,9 7,10.12 7,11.5 C7,12.88 5.88,14 4.5,14 C3.12,14 2,12.88 2,11.5 C2,10.12 3.12,9 4.5,9" id="Fill-337" fill="#1C75BC"></path>
+            <path d="M13.5,8 C11.56975,8 10,9.56975 10,11.5 C10,13.43025 11.56975,15 13.5,15 C15.43025,15 17,13.43025 17,11.5 C17,9.56975 15.43025,8 13.5,8 M13.5,9 C14.88,9 16,10.12 16,11.5 C16,12.88 14.88,14 13.5,14 C12.12,14 11,12.88 11,11.5 C11,10.12 12.12,9 13.5,9" id="Fill-339" fill="#1C75BC"></path>
+        </g>
+    </g>
+</svg>

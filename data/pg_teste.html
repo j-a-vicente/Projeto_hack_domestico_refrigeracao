@@ -1,0 +1,24 @@
+<h3>Selecione uma opção no menu lateral.</h3>
+
+<div>
+    <div id="area-controle-power">
+        <label class="pwr-switch">
+            <input type="checkbox" id="powerSwitch" onchange="togglePower(this)">
+            <span class="pwr-slider">
+                <span class="pwr-text-on">ON</span>
+                <span class="pwr-text-off">OFF</span>
+                <span class="pwr-knob"></span>
+            </span>
+        </label>
+    </div>
+</div>
+<div>
+    <div class="power-control-area">
+        <button id="btnPower" class="pwr-button off" onclick="togglePowerBtn()">
+            <svg viewBox="0 0 24 24" class="pwr-icon">
+                <path d="M16.56,5.44L15.11,6.89C16.84,7.94 18,9.83 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12C6,9.83 7.16,7.94 8.88,6.88L7.44,5.44C5.18,6.91 3.7,9.33 3.7,12A8.3,8.3 0 0,0 12,20.3A8.3,8.3 0 0,0 20.3,12C20.3,9.33 18.82,6.91 16.56,5.44M11,3H13V12H11V3Z" />
+            </svg>
+        </button>
+    </div>
+</div>
+

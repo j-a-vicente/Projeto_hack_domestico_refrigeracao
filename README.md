@@ -1,1 +1,0 @@
-# Projeto_hack_domestico_refrigeracao
