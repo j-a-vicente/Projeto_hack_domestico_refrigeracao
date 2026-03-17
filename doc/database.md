@@ -12,7 +12,7 @@ A transição de logs em arquivos de texto para um banco de dados relacional (SQ
 
 O diagrama abaixo ilustra como os componentes de hardware se relacionam entre si e com a estrutura de monitoramento e logs:
 
-![alt text](../data/img/db_diagrama_dados.png)
+
 ```mermaid
 erDiagram
     OBJETO_TIPO ||--o{ OBJETOS : "categoriza (1:N)"
@@ -156,7 +156,9 @@ PRAGMA foreign_keys = ON;
 CREATE TABLE IF NOT EXISTS objeto_tipo (
     id_tipo INTEGER PRIMARY KEY AUTOINCREMENT,
     sigla TEXT NOT NULL UNIQUE,
-    nome TEXT NOT NULL
+    nome TEXT NOT NULL,
+    botao_on_off BIT DEFAULT 0,
+    valor_variante BIT DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS objetos (
@@ -165,6 +167,9 @@ CREATE TABLE IF NOT EXISTS objetos (
     id_tipo INTEGER NOT NULL,
     nome TEXT NOT NULL,
     descricao TEXT,
+    modelos_circuito TEXT,
+    modelos_circuito_foto TEXT,
+    imagem TEXT,
     status_init INTEGER DEFAULT 0,
     last_status INTEGER,
     last_dt DATETIME,
@@ -276,59 +281,159 @@ VACUUM;
 Tabela: **objeto_tipo**
 ```sql
 -- Scripts para popular a tabela objeto_tipo
-INSERT INTO objeto_tipo (sigla, nome) VALUES ('SDG'  ,'Sensor do Dreno de Degelo');
-INSERT INTO objeto_tipo (sigla, nome) VALUES ('SNL'  ,'Sensor de Nível');
-INSERT INTO objeto_tipo (sigla, nome) VALUES ('SCLR' ,'Sensor de Corrente Líquida regrigeração');
-INSERT INTO objeto_tipo (sigla, nome) VALUES ('SCDC' ,'Sensor de Corrente DC');
-INSERT INTO objeto_tipo (sigla, nome) VALUES ('SCAC' ,'Sensor de Corrente AC');
-INSERT INTO objeto_tipo (sigla, nome) VALUES ('STA'  ,'Sensor de Temperatura Ar');
-INSERT INTO objeto_tipo (sigla, nome) VALUES ('CL'   ,'Cooler (Geral)');
-INSERT INTO objeto_tipo (sigla, nome) VALUES ('CLCOL','Cooler (Ar Frio)');
-INSERT INTO objeto_tipo (sigla, nome) VALUES ('CLHOT','Cooler (Ar Quente)');
-INSERT INTO objeto_tipo (sigla, nome) VALUES ('MF'   ,'MOSFET');
-INSERT INTO objeto_tipo (sigla, nome) VALUES ('RL'   ,'Relé');
-INSERT INTO objeto_tipo (sigla, nome) VALUES ('PP'   ,'Pastilha Peltier');
-INSERT INTO objeto_tipo (sigla, nome) VALUES ('SAM'   ,'Sensor de abertura magnético');
+INSERT INTO objeto_tipo (sigla, nome, botao_on_off, valor_variante) VALUES ('SDG'  ,'Sensor do Dreno de Degelo',1,0);
+INSERT INTO objeto_tipo (sigla, nome, botao_on_off, valor_variante) VALUES ('SNL'  ,'Sensor de Nível',1,0);
+INSERT INTO objeto_tipo (sigla, nome, botao_on_off, valor_variante) VALUES ('SCLR' ,'Sensor de Corrente Líquida regrigeração',1,0);
+INSERT INTO objeto_tipo (sigla, nome, botao_on_off, valor_variante) VALUES ('SCDC' ,'Sensor de Corrente DC',1,0);
+INSERT INTO objeto_tipo (sigla, nome, botao_on_off, valor_variante) VALUES ('SCAC' ,'Sensor de Corrente AC',1,0);
+INSERT INTO objeto_tipo (sigla, nome, botao_on_off, valor_variante) VALUES ('STA'  ,'Sensor de Temperatura AR',1,0);
+INSERT INTO objeto_tipo (sigla, nome, botao_on_off, valor_variante) VALUES ('STL'  ,'Sensor de Temperatura Liquido',1,0);
+INSERT INTO objeto_tipo (sigla, nome, botao_on_off, valor_variante) VALUES ('RF'   ,'Refrigerador',1,1);
+INSERT INTO objeto_tipo (sigla, nome, botao_on_off, valor_variante) VALUES ('CODR' ,'Condensadora',1,0);
+INSERT INTO objeto_tipo (sigla, nome, botao_on_off, valor_variante) VALUES ('CL'   ,'Cooler',1,1);
+INSERT INTO objeto_tipo (sigla, nome, botao_on_off, valor_variante) VALUES ('MF'   ,'MOSFET',1,1);
+INSERT INTO objeto_tipo (sigla, nome, botao_on_off, valor_variante) VALUES ('RL'   ,'Relé',1,0);
+INSERT INTO objeto_tipo (sigla, nome, botao_on_off, valor_variante) VALUES ('PP'   ,'Pastilha Peltier',1,1);
+INSERT INTO objeto_tipo (sigla, nome, botao_on_off, valor_variante) VALUES ('GAV'  ,'Gaveta',0,0);
+INSERT INTO objeto_tipo (sigla, nome, botao_on_off, valor_variante) VALUES ('PRT'  ,'Porta',0,0);
+INSERT INTO objeto_tipo (sigla, nome, botao_on_off, valor_variante) VALUES ('DEG'  ,'Distribuidor de energia',1,0);
+INSERT INTO objeto_tipo (sigla, nome, botao_on_off, valor_variante) VALUES ('NBK'  ,'Nobreak',1,0);
+INSERT INTO objeto_tipo (sigla, nome, botao_on_off, valor_variante) VALUES ('BBT'  ,'Banco de baterias',1,0);
+INSERT INTO objeto_tipo (sigla, nome, botao_on_off, valor_variante) VALUES ('ETZ'  ,'Estabilizador',1,0);
+INSERT INTO objeto_tipo (sigla, nome, botao_on_off, valor_variante) VALUES ('ETZ'  ,'Sensor magnético',1,0);
 ```
 
 Tabela: **objetos**
 ```sql
 -- Scripts para popular a tabela objetos
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('Mosfete00',''                          , 1 , 0    , NULL, NULL, 1000, 0, 100, datetime('now'), NULL, 1);
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('Mosfete01',''                          , 1 , 0    , NULL, NULL, 1000, 0, 100, datetime('now'), NULL, 1);
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('Mosfete02',''                          , 1 , 0    , NULL, NULL, 1000, 0, 100, datetime('now'), NULL, 1);
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('Mosfete03',''                          , 1 , 0    , NULL, NULL, 1000, 0, 100, datetime('now'), NULL, 1);
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('Mosfete04',''                          , 1 , 0    , NULL, NULL, 1000, 0, 100, datetime('now'), NULL, 1);
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('Mosfete05',''                          , 1 , 0    , NULL, NULL, 1000, 0, 100, datetime('now'), NULL, 1);
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('Mosfete06',''                          , 1 , 0    , NULL, NULL, 1000, 0, 100, datetime('now'), NULL, 1);
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('Mosfete07',''                          , 1 , 0    , NULL, NULL, 1000, 0, 100, datetime('now'), NULL, 1);
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('Mosfete08',''                          , 1 , 0    , NULL, NULL, 1000, 0, 100, datetime('now'), NULL, 1);
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('Mosfete09',''                          , 1 , 0    , NULL, NULL, 1000, 0, 100, datetime('now'), NULL, 1);
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('Mosfete10',''                          , 1 , 0    , NULL, NULL, 1000, 0, 100, datetime('now'), NULL, 1);
+
+-- Refrigerador central
+INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('REFP','Refrigerador Principal '                      , 8  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('PPRP0','Pastilha Peltier REFP'                       ,1 , 13  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('PPRP1','Pastilha Peltier REFP'                       ,1 , 13  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('PPRP2','Pastilha Peltier REFP'                       ,1 , 13  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('PPRP3','Pastilha Peltier REFP'                       ,1 , 13  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('PPRP4','Pastilha Peltier REFP'                       ,1 , 13  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('PPRP5','Pastilha Peltier REFP'                       ,1 , 13  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('PPRP6','Pastilha Peltier REFP'                       ,1 , 13  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('PPRP7','Pastilha Peltier REFP'                       ,1 , 13  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+
+-- Controle de ligação das partilhas Peltier.
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('MFPPRP0','Mosfete que controla a ligação da partilha Peltier PPRP0' ,2, 11 , 0    , NULL, NULL, 1000, 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('MFPPRP1','Mosfete que controla a ligação da partilha Peltier PPRP1' ,3, 11 , 0    , NULL, NULL, 1000, 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('MFPPRP2','Mosfete que controla a ligação da partilha Peltier PPRP2' ,4, 11 , 0    , NULL, NULL, 1000, 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('MFPPRP3','Mosfete que controla a ligação da partilha Peltier PPRP3' ,5, 11 , 0    , NULL, NULL, 1000, 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('MFPPRP4','Mosfete que controla a ligação da partilha Peltier PPRP4' ,6, 11 , 0    , NULL, NULL, 1000, 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('MFPPRP5','Mosfete que controla a ligação da partilha Peltier PPRP5' ,7, 11 , 0    , NULL, NULL, 1000, 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('MFPPRP6','Mosfete que controla a ligação da partilha Peltier PPRP6' ,8, 11 , 0    , NULL, NULL, 1000, 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('MFPPRP7','Mosfete que controla a ligação da partilha Peltier PPRP7' ,9, 11 , 0    , NULL, NULL, 1000, 0, 100, datetime('now'), NULL, 1);
+
+
+-- Sensor de Corrente eletrica DC para os Mosfets que vam ligar as partilhas Peltier do Refrigerador principal
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('SCDCMFPPRP0','Sensor de Corrente Elétrica DC para MFPPRP0' ,10 , 4  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('SCDCMFPPRP1','Sensor de Corrente Elétrica DC para MFPPRP1' ,11 , 4  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('SCDCMFPPRP2','Sensor de Corrente Elétrica DC para MFPPRP2' ,12 , 4 , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('SCDCMFPPRP3','Sensor de Corrente Elétrica DC para MFPPRP3' ,13 , 4  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('SCDCMFPPRP4','Sensor de Corrente Elétrica DC para MFPPRP4' ,14 , 4  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('SCDCMFPPRP5','Sensor de Corrente Elétrica DC para MFPPRP5' ,15 , 4  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('SCDCMFPPRP6','Sensor de Corrente Elétrica DC para MFPPRP6' ,16 , 4  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('SCDCMFPPRP7','Sensor de Corrente Elétrica DC para MFPPRP7' ,17 , 4  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+
+-- Cooler que vão ser responsavel por circular o ar dentro do Rack.
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('CSAF','Cooler da saida de ar frio direto do refrigerador'    ,1 , 10  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('CPAQ','Cooler da presão de ar quente direto do refrigerador' ,1 , 10  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('CEXT','Cooler de exaustor de teto'                           ,1 , 10  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+
+-- Controle de ligação do cooler.
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('MFCSAF','Mosfete que controla a ligação do cooler CSAF' ,18, 11 , 0    , NULL, NULL, 1000, 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('MFCPAQ','Mosfete que controla a ligação do cooler CPAQ' ,19, 11 , 0    , NULL, NULL, 1000, 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('MFCEXT','Mosfete que controla a ligação do cooler CEXT' ,20, 11 , 0    , NULL, NULL, 1000, 0, 100, datetime('now'), NULL, 1);
+
+-- Sensor de temperatura cooler refrigeração.
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('TMREFP','Termômetro da sainda de ar frio CSAF'			  , 18 , 6 , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('TMCEXT','Termômetro do exaustor CEXT'	                  , 20 , 6 , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('TMDCE','Termômetro do dissipador de calor esquerdo REFP'  , 1  , 6 , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('TMDCD','Termômetro do dissipador de calor direito REFP'   , 1  , 6 , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+
+
+-- Condensadora 
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('COREFP','Central Condensadora do Refrigerador Principal REFP' ,1 , 9  , 0    , NULL, NULL, 100, 0, 100, datetime('now'), NULL, 1);
+
+
+-- Cooler de refrigração da condesadora
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('CEXCOREFP','Cooler de exaustor da Condensadora COREFP'    ,25 , 10  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+
+-- Mosfete de ligação do cooler de refrigração da condesadora
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('MFCEXCOREFP','Mosfete que controla a ligação do cooler CEXCOREFP' ,26, 11 , 0    , NULL, NULL, 1000, 0, 100, datetime('now'), NULL, 1);
+
+-- Reler de ligação da condensadora
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('RLCOREFP','Relé de ligação da condesadora principal COREFP' ,21, 12 , 0    , NULL, NULL, NULL, 0, 1, datetime('now'), NULL, 1);
+
+-- Sensor Fluxo do liguido de refrigeração da condensadora. NH 
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('SFCOREFPQ','Sensor Fluxo do liguido de refrigeração da condensadora QUENTE da Condensadora COREFP', 25 , 3 , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('SFCOREFPF','Sensor Fluxo do liguido de refrigeração da condensadora FRIO da Condensadora COREFP'  , 25 , 3 , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+
+-- Sensor de Temperatura do liquido de refrigração da condensadora.
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('TMLQ','Termômetro liquido refrigeração QUENTE SFCOREFPQ'	      , 25 , 7 , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('TMLF','Termômetro liquido refrigeração FRIO SFCOREFPQ'			  , 25 , 7 , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+
+-- Sensor de Temperatura da condensadora.
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('TMCOREFP','Termômetro da condensadora COREFP'			  , 25 , 6 , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+
+-- Nível do liquido de regrigração da condensadora.
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('SNREFP','Sensor de Nível do ligquido de refrigeração da condensadora REFP'            , 25   , 2  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
 
 
 
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('','Relé'                            , 2 , 0    , NULL, NULL, NULL, 0, 100, datetime('now'), NULL, 1);
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('','Pastilha Peltier'                , 3 , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('','Dreno do Degelo'                 , 4  , NULL , NULL, NULL, NULL, 0, 100, datetime('now'), NULL, 1);
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('','Cooler'                          , 10  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('','Cooler ar quente'                , 12  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('','Cooler ar frio'                  , 11  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+
+-- Porta da frente e de trás
+INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('PTF','Porta da frente do Hack'			  , 6 , 0    , NULL, NULL, NULL  , NULL, NULL, datetime('now'), NULL, 1); --34
+INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('PTT','Porta de trás do Hack'			  , 6 , 0    , NULL, NULL, NULL  , NULL, NULL, datetime('now'), NULL, 1); --35
+
+-- Sensor de abertura das portas frente e trás
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('SAPTF','Sensor de abertura porta da FRENTE PTF'			  , 34 , 20 , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('SAPTT','Sensor de abertura porta da FRENTE PTT'			  , 35 , 20 , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
 
 
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('SARF','Sainda de ar frio'      						 , 9  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('TPDF','Termômetro porta da frente'      			 , 9  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('EARQ','Entrata de ar Quente'      					 , 9  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('TPDT','Termômetro porta de trás'      				 , 9  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('TDCE','Termômetro dissipador de calor esquerdo'      , 9  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('TDCD','Termômetro dissipador de calor direito'       , 9  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+-- Sensor de temperatura do Hack, portas frente e trás
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('TMPTF','Termômetro porta da FRENTE PTF'			  , 34 , 6 , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('TMPTT','Termômetro porta da FRENTE PTT'			  , 35 , 6 , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+
+-- Gavetas
+INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('GV00','Gaveta Central '		  , 14 , 0    , NULL, NULL, NULL  , NULL, NULL, datetime('now'), NULL, 1); -- 40
+INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('GV01','Gaveta 1 '			  , 14 , 0    , NULL, NULL, NULL  , NULL, NULL, datetime('now'), NULL, 1); -- 41 
+INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('GV02','Gaveta 2 '			  , 14 , 0    , NULL, NULL, NULL  , NULL, NULL, datetime('now'), NULL, 1); -- 42
+INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('GV03','Gaveta 3 '			  , 14 , 0    , NULL, NULL, NULL  , NULL, NULL, datetime('now'), NULL, 1); -- 43 
+INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('GV04','Gaveta Nobreak '		  , 14 , 0    , NULL, NULL, NULL  , NULL, NULL, datetime('now'), NULL, 1); -- 44
+
+-- Distribuidor e Reguar de energia das Gavetas
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('DRE','Distribuidor de energia, placa com os relés que vai controlar qual regual vai receber energia.' ,44, 16 , 0    , NULL, NULL, NULL, 0, 1, datetime('now'), NULL, 1); -- 45
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('REGV00','Regua energia GV00' ,40, 16 , 0    , NULL, NULL, NULL, 0, 1, datetime('now'), NULL, 1); -- 46
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('REGV01','Regua energia GV01' ,41, 16 , 0    , NULL, NULL, NULL, 0, 1, datetime('now'), NULL, 1); -- 47
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('REGV02','Regua energia GV02' ,42, 16 , 0    , NULL, NULL, NULL, 0, 1, datetime('now'), NULL, 1); -- 48
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('REGV03','Regua energia GV03' ,43, 16 , 0    , NULL, NULL, NULL, 0, 1, datetime('now'), NULL, 1); -- 49
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('REGV04','Regua energia GV04' ,44, 16 , 0    , NULL, NULL, NULL, 0, 1, datetime('now'), NULL, 1); -- 50
+
+-- Relé que ligar o Distribuidor e Reguar de energia que estão nas gavetas 
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('RLREGV00','Relé de ligação REGV00' ,46, 12 , 0    , NULL, NULL, NULL, 0, 1, datetime('now'), NULL, 1); -- 51
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('RLREGV01','Relé de ligação REGV01' ,47, 12 , 0    , NULL, NULL, NULL, 0, 1, datetime('now'), NULL, 1); -- 52
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('RLREGV02','Relé de ligação REGV02' ,48, 12 , 0    , NULL, NULL, NULL, 0, 1, datetime('now'), NULL, 1); -- 53
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('RLREGV03','Relé de ligação REGV03' ,49, 12 , 0    , NULL, NULL, NULL, 0, 1, datetime('now'), NULL, 1); -- 54
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('RLREGV04','Relé de ligação REGV04' ,50, 12 , 0    , NULL, NULL, NULL, 0, 1, datetime('now'), NULL, 1); -- 55
+
+-- Sensor de Corrente eletrica A.C. do Distribuidor e Reguar de energia das gavetas.
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('SCACDRE'     ,'Sensor de Corrente Elétrica AC DRE'      ,45 , 5  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('SCACRLREGV00','Sensor de Corrente Elétrica AC RLREGV00' ,51 , 5  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('SCACRLREGV01','Sensor de Corrente Elétrica AC RLREGV01' ,52 , 5  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('SCACRLREGV02','Sensor de Corrente Elétrica AC RLREGV02' ,53 , 5  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('SCACRLREGV03','Sensor de Corrente Elétrica AC RLREGV03' ,54 , 5  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+INSERT INTO objetos (nome, descricao, id_pai, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('SCACRLREGV04','Sensor de Corrente Elétrica AC RLREGV04' ,55 , 5  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
 
 
+--INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('','Dreno do Degelo'                 , 1  , NULL , NULL, NULL, NULL, 0, 100, datetime('now'), NULL, 1);
 
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('','Sensor de Corrente Elétrica DC' , 7  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('','Sensor de Corrente Elétrica AC' , 8  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('','Sensor de Corrente Líquida'    , 6  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
-INSERT INTO objetos (nome, descricao, id_tipo, status_init, last_status, last_dt, cfg_val, cfg_min, cfg_max, dt_cadastro, dt_alteracao, ativo) VALUES ('','Sensor de Nível'               , 5  , 0    , NULL, NULL, 30  , 0, 100, datetime('now'), NULL, 1);
+
 
 
 ```
