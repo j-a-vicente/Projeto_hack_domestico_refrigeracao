@@ -1,0 +1,76 @@
+<div class="dashboard-grid">
+    
+    <div class="dash-panel dash-card-top dash-border-blue">
+        <div class="dash-panel-title">Temp. Rack (VL) 🌡️</div>
+        <div class="dash-card-value">24.5°C</div>
+    </div>
+
+    <div class="dash-panel dash-card-top dash-border-green">
+        <div class="dash-panel-title">Nível líquido (SNL) 💧</div>
+        <div class="dash-card-value">85%</div>
+    </div>
+
+    <div class="dash-panel dash-card-top dash-border-blue">
+        <div class="dash-panel-title">Consumo (VC 30d) ⚡</div>
+        <div class="dash-card-value">1240 W</div>
+    </div>
+
+
+    <div class="dash-panel dash-card-top dash-border-green">
+        <div class="dash-panel-title">Status Sistema</div>
+        
+        <div class="dash-card-value" style="color: white; background: #2ecc71; font-size: 16px; padding: 5px 10px; border-radius: 4px; display: inline-block; margin-top: 5px; margin-bottom: 10px;">
+            <span id="sys-status">CARREGANDO...</span>
+        </div>
+        
+        <div style="font-size: 13px; color: #555; line-height: 1.5;">
+            <strong>Último Boot:</strong> <span id="sys-boot">--/--/---- --:--:--</span><br>
+            <strong>Tempo Ligado:</strong> <span id="sys-uptime">00:00:00</span>
+        </div>
+    </div>
+
+    
+    <div class="dash-panel dash-panel-chart-line">
+        <div class="dash-panel-title">Evolução Térmica (STA / SCL)</div>
+        <div style="position: relative; height: 100%; width: 100%;">
+            <canvas id="chartEvolucaoTermica"></canvas>
+        </div>
+    </div>
+
+    <div class="dash-panel dash-panel-toggles">
+        <div class="dash-panel-title">Status Atuadores (Ativos)</div>
+        <ul style="list-style: none;">
+            <li style="padding: 15px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between;">
+                Peltier (P) <span>🟢 ON</span>
+            </li>
+            <li style="padding: 15px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between;">
+                Cooler (CL) <span>🟢 ON</span>
+            </li>
+            <li style="padding: 15px 0; display: flex; justify-content: space-between;">
+                Relé (RL) <span>⚪ OFF</span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="dash-panel dash-panel-chart-bar">
+        <div class="dash-panel-title">Corrente Elétrica (SCAC / SCDC)</div>
+        <div style="position: relative; height: 100%; width: 100%;">
+            <canvas id="chartCorrente"></canvas>
+        </div>
+    </div>
+
+    <div class="dash-panel dash-panel-alerts">
+        <div class="dash-alerts-header">
+            Centro de Alertas Ativos
+        </div>
+        <div class="dash-alerts-content">
+            <div class="dash-alert-item">
+                ⚠️ DG: Umidade detectada no dreno do degelo
+            </div>
+            <div class="dash-alert-item ok">
+                ✔️ SNL: Reservatório em nível seguro
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>drawing/drawing-insert-dwt</title>
+    <desc>Created with Sketch.</desc>
+    <g id="drawing/drawing-insert-dwt" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="drawing-insert-dwt" transform="translate(1.000000, 0.000000)" fill="#333333">
+            <path d="M16,4.999 L14,2.999 C13.514,2.513 12.688,2 12,2 L2,2 C1.313,2 1,2.312 1,2.999 L1,17.999 C1,18.686 1.313,19 2,19 L16,18.999 C16.688,18.999 17,18.686 17,17.999 L17,6.999 C17,6.311 16.602,5.602 16.116,5.116 L16,4.999 L16,4.999 Z M13,6 L13,3.499 L15.5,5.999 L13,6 L13,6 Z M15.75,18 L2.25,18 C2.115,18 2,17.885 2,17.75 L2,3.25 C2,3.115 2.114,3 2.25,3 L12,2.999 L12,7 L16,6.999 L16,17.749 C16,17.884 15.886,18 15.75,18 Z" id="Fill-256"></path>
+            <polyline id="Fill-257" points="12 12 12 13 13 13 13 17 14 17 14 15 14 14 14 13 15 13 15 12 13 12"></polyline>
+            <polygon id="Fill-257" points="7 13 7 17 8 17 9 15 10 17 11 17 11 12 10 12 10 15 9 13 8 15 8 14 8 13 8 12 7 12"></polygon>
+            <polyline id="Fill-257" points="12 12 12 13 13 13 13 17 14 17 14 15 14 14 14 13 15 13 15 12 13 12"></polyline>
+            <path d="M5,12 C5.547,12 6,12.406 6,13 L6,16 C6,16.5 5.516,17 5,17 L3,17 L3,12 L5,12 L5,12 Z M4,16 L5,16 L5,13 L4,13 L4,16 Z" id="Fill-258"></path>
+            <path d="M3.396,5.75 L6.743,5.75 C6.584,2.242 3.895,1.75 1,1.75 L0.75,1.75 L0.75,0.75 L1,0.75 C5.193,0.75 9.082,1.363 9.245,5.75 L12.604,5.75 L8,10.354 L3.396,5.75" id="Fill-261"></path>
+        </g>
+    </g>
+</svg>

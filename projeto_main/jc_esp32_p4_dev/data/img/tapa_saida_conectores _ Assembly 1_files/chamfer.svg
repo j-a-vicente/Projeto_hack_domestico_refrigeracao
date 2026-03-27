@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>drawings/chamfer</title>
+    <desc>Created with Sketch.</desc>
+    <g id="drawings/chamfer" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polygon id="Line-converted-to-outlines" fill="#1C75BC" fill-rule="nonzero" points="5.29289322 8 2 8 2 7 5.70710678 7 13 14.2928932 13 18 12 18 12 14.7071068"></polygon>
+        <path d="M10.6406466,8.64064661 L15.2928932,3.9884 L19,3.9884 L19,4.9884 L15.7071068,4.9884 L11.3477534,9.34775339 L13,11 L9,11 L9,7 L10.6406466,8.64064661 Z" id="Fill-106" fill="#333333" fill-rule="nonzero"></path>
+    </g>
+</svg>

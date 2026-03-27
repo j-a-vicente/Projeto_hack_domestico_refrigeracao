@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>qtresources/icons/drawing-two-edge-linear-centerline</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="qtresources/icons/drawing-two-edge-linear-centerline">
+            <g id="drawing-two-edge-linear-centerline" transform="translate(2.000000, 2.000000)">
+                <path d="M0,5 L0,4 L7,4 C10.1865504,4 12.8837117,2.73074761 15.1237117,0.170747696 L15.8762883,0.829252304 C13.4496216,3.60258573 10.4801163,5 7,5 L0,5 Z M0,12 L7,12 C10.4655672,12 13.4261845,13.3655243 15.8535534,15.7928932 L15.1464466,16.5 C12.9071489,14.2607023 10.2010994,13 7,13 L0,13 L0,12 Z" id="Combined-Shape" fill="#1C75BC" fill-rule="nonzero"></path>
+                <path d="M0,8 L3,8 L3,9 L0,9 L0,8 Z M6,8 L10,8 L10,9 L6,9 L6,8 Z M13,8 L16,8 L16,9 L13,9 L13,8 Z M4,8 L5,8 L5,9 L4,9 L4,8 Z M11,8 L12,8 L12,9 L11,9 L11,8 Z" id="Combined-Shape" fill="#333333"></path>
+            </g>
+        </g>
+    </g>
+</svg>
