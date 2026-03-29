@@ -85,66 +85,6 @@ erDiagram
 
 ```
 
-```mermaid
-    OBJETO_TIPO ||--o{ OBJETOS : "categoriza (1:N)"
-    OBJETOS ||--o{ OBJETOS : "hierarquia pai-filho (1:N)"
-    OBJETOS ||--o{ OBJETO_MONITOR : "atua como executor (1:N)"
-    OBJETOS ||--o{ OBJETO_MONITOR : "é monitorado por (1:N)"
-    OBJETOS ||--o{ LOGS_HISTORICO : "gera registros (1:N)"
-    OBJETOS ||--o{ LOGS_CONSOLIDADOS : "possui médias (1:N)"
-
-    OBJETO_TIPO {
-        INTEGER id_tipo PK 
-        TEXT sigla 
-        TEXT nome 
-        BIT botao_on_off
-        BIT valor_variante
-    }
-
-    OBJETOS {
-        INTEGER id_objeto PK 
-        INTEGER id_pai FK 
-        INTEGER id_tipo FK 
-        TEXT nome 
-        TEXT descricao
-        TEXT modelos_circuito
-        TEXT modelos_circuito_foto
-        TEXT imagem
-        INTEGER status_init 
-        INTEGER last_status 
-        DATETIME last_dt 
-        REAL cfg_val 
-        REAL cfg_min 
-        REAL cfg_max 
-        DATETIME dt_cadastro
-        DATETIME dt_alteracao
-        INTEGER ativo 
-    }
-
-    OBJETO_MONITOR {
-        INTEGER id_monitor PK 
-        INTEGER id_executor FK 
-        INTEGER id_monitorado FK 
-        INTEGER ativo 
-    }
-
-    LOGS_HISTORICO {
-        INTEGER id_log PK 
-        INTEGER id_objeto FK 
-        DATETIME datahora 
-        REAL valor 
-    }
-
-    LOGS_CONSOLIDADOS {
-        INTEGER id_consolidado PK
-        INTEGER id_objeto FK
-        TEXT periodo_mes
-        REAL valor_medio
-        REAL valor_maximo
-        REAL valor_minimo
-    }
-
-```
 ### **Diagrama de Ligação de Registros (Hierarquia Física `id_pai`)**
 Este diagrama ilustra a árvore de dependência criada através do campo `id_pai` na tabela `objetos`. Ele mostra como a energia ou a lógica de controle flui de um componente principal (Refrigerador) até seus microcomponentes (Mosfets e Sensores).
 
