@@ -510,7 +510,8 @@ INSERT INTO objetos (id_objeto, nome, descricao, id_pai, id_tipo, status_init, c
 (42, 'TMLQ', 'Termometro Liquido Quente', 36, 7, 0, 30, 0, 100, 1),
 (43, 'TMLF', 'Termometro Liquido Frio', 36, 7, 0, 30, 0, 100, 1),
 (44, 'TMCOREFP', 'Termometro Condensadora', 36, 6, 0, 30, 0, 100, 1),
-(45, 'SNREFP', 'Sensor Nivel Condensadora', 36, 2, 0, 30, 0, 100, 1);
+(45, 'SNREFP', 'Sensor Nivel Condensadora Alto', 36, 2, 0, 0, 0, 80, 1);
+(46, 'SNREFP', 'Sensor Nivel Condensadora Baixo', 36, 2, 0, 0, 0, 20, 1);
 
 -- 3. GAVETAS, PORTAS E DISTRIBUIÇÃO
 INSERT INTO objetos (id_objeto, nome, descricao, id_pai, id_tipo, status_init, ativo) VALUES 
@@ -1015,4 +1016,69 @@ SELECT
     END 
   AS INTEGER) AS valor
 FROM calculo_horas;
+```
+
+Grupo de objetos: **Gerenciar os grupos de objetos**
+```sql
+
+-- Será responsavel por ligar todo o conjunto de refrigeração do Hack
+INSERT INTO grupo_objetos(id_objeto, nome_grupo) VALUES(39, 'Refrigeração.');
+
+-- Será responsavel por controlar a potencia das placas Peltier.
+INSERT INTO grupo_objetos(id_objeto, nome_grupo) VALUES(18, 'Controle de temperatura.');
+
+-- Será responsavel por controlar a pontencia dos cooler.
+INSERT INTO grupo_objetos(id_objeto, nome_grupo) VALUES(29, 'Cooler circulação de ar.');
+
+-- Será responsavel por analisar o consulmo de energia das placas Peltier.
+INSERT INTO grupo_objetos(id_objeto, nome_grupo) VALUES(18, 'Sencor de corrente refrigeração.');
+
+
+--- Refrigeração
+-- Reler da Condensadora.
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(1, 39);
+-- Mosfetes que vão ligar as Partilhas Peltier da Refrigeração.
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(1, 10);
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(1, 11);
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(1, 12);
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(1, 13);
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(1, 14);
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(1, 15);
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(1, 16);
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(1, 17);
+-- Cooler de circulação do AR.
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(1, 29);
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(1, 30);
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(1, 31);
+-- Cooler da Condensadora.
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(1, 38);
+
+
+--- Controle de temperatura
+-- Mosfetes que vão ligar as Partilhas Peltier da Refrigeração.
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(2, 10);
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(2, 11);
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(2, 12);
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(2, 13);
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(2, 14);
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(2, 15);
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(2, 16);
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(2, 17);
+
+
+--- Cooler circulação de Ar.
+-- Cooler de circulação do AR.
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(3, 29);
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(3, 30);
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(3, 31);
+
+--- Sencor de corrente refrigeração.
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(4, 18);
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(4, 19);
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(4, 20);
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(4, 21);
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(4, 22);
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(4, 23);
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(4, 24);
+INSERT INTO objetos_agrupados(id_grupos_objetos, id_objeto) VALUES(4, 25);
 ```
