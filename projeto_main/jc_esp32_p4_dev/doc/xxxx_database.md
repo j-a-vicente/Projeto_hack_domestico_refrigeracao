@@ -17,48 +17,51 @@ O diagrama abaixo ilustra como os componentes de hardware se relacionam entre si
 erDiagram
     OBJETO_TIPO ||--o{ OBJETOS : "categoriza (1:N)"
     OBJETOS ||--o{ OBJETOS : "hierarquia pai-filho (1:N)"
-    OBJETOS ||--o{ OBJETO_MONITOR : "executor/monitorado"
-    OBJETOS ||--o{ LOGS_HISTORICO : "gera registros"
-    OBJETOS ||--o{ LOGS_CONSOLIDADOS : "dados consolidados"
-
-    GRUPO_OBJETOS ||--o{ OBJETOS_AGRUPADOS : "1:N"
-    OBJETOS ||--o{ OBJETOS_AGRUPADOS : "N:1"
+    OBJETOS ||--o{ OBJETO_MONITOR : "atua como executor (1:N)"
+    OBJETOS ||--o{ OBJETO_MONITOR : "é monitorado por (1:N)"
+    OBJETOS ||--o{ LOGS_HISTORICO : "gera registros (1:N)"
+    OBJETOS ||--o{ LOGS_CONSOLIDADOS : "possui médias (1:N)"
 
     OBJETO_TIPO {
-        INTEGER id_tipo PK
-        TEXT sigla
-        TEXT nome
+        INTEGER id_tipo PK 
+        TEXT sigla 
+        TEXT nome 
         BIT botao_on_off
         BIT valor_variante
-        DATETIME dt_cadastro
-        DATETIME dt_alteracao
     }
 
     OBJETOS {
-        INTEGER id_objeto PK
-        INTEGER id_pai FK
-        INTEGER id_tipo FK
-        TEXT nome
+        INTEGER id_objeto PK 
+        INTEGER id_pai FK 
+        INTEGER id_tipo FK 
+        TEXT nome 
         TEXT descricao
+        TEXT modelos_circuito
+        TEXT modelos_circuito_foto
+        TEXT imagem
+        INTEGER status_init 
+        INTEGER last_status 
+        DATETIME last_dt 
+        REAL cfg_val 
+        REAL cfg_min 
+        REAL cfg_max 
         DATETIME dt_cadastro
         DATETIME dt_alteracao
+        INTEGER ativo 
     }
 
     OBJETO_MONITOR {
-        INTEGER id_monitor PK
-        INTEGER id_executor FK
-        INTEGER id_monitorado FK
-        DATETIME dt_cadastro
-        DATETIME dt_alteracao
+        INTEGER id_monitor PK 
+        INTEGER id_executor FK 
+        INTEGER id_monitorado FK 
+        INTEGER ativo 
     }
 
     LOGS_HISTORICO {
-        INTEGER id_log PK
-        INTEGER id_objeto FK
-        DATETIME datahora
-        REAL valor
-        DATETIME dt_cadastro
-        DATETIME dt_alteracao
+        INTEGER id_log PK 
+        INTEGER id_objeto FK 
+        DATETIME datahora 
+        REAL valor 
     }
 
     LOGS_CONSOLIDADOS {
@@ -66,25 +69,11 @@ erDiagram
         INTEGER id_objeto FK
         TEXT periodo_mes
         REAL valor_medio
-        DATETIME dt_cadastro
-        DATETIME dt_alteracao
-    }
-
-    GRUPO_OBJETOS {
-        INTEGER id_grupo PK
-        TEXT nome_grupo
-        DATETIME dt_cadastro
-        DATETIME dt_alteracao
-    }
-
-    OBJETOS_AGRUPADOS {
-        INTEGER id_relacao PK
-        INTEGER id_grupo FK
-        INTEGER id_objeto FK
+        REAL valor_maximo
+        REAL valor_minimo
     }
 
 ```
-
 ### **Diagrama de Ligação de Registros (Hierarquia Física `id_pai`)**
 Este diagrama ilustra a árvore de dependência criada através do campo `id_pai` na tabela `objetos`. Ele mostra como a energia ou a lógica de controle flui de um componente principal (Refrigerador) até seus microcomponentes (Mosfets e Sensores).
 
@@ -195,15 +184,7 @@ flowchart TD
 
 
 ### **Tabela: `grupo_objetos`** (Grupo do objetos)
-Tabela responsável por agrupar múltiplos objetos para execução de ações em lote.
-
-Função:
-- Permitir controle simultâneo de vários dispositivos
-- Abstrair operações complexas (ex: ligar toda refrigeração)
-
-Observação:
-- O relacionamento correto é N:N através da tabela objetos_agrupados
-
+A tabela será usado para grupos objetos que serão suados para executar a mesma tarefa em todos de uma fez.
 | Coluna | Tipo SQLite | Descrição |
 | --- | --- | --- |
 | `id_grupo_objetos` | INTEGER (PK) | Identificador único do grupo. |
@@ -384,30 +365,6 @@ void criarTabelasDeMonitoramento(sqlite3* db) {
 ```
 
 ---
-
-
-
----
-
-## 🔎 Funcionamento dos Logs
-
-### logs_historico
-Armazena dados brutos de alta frequência gerados pelos sensores.
-- Alta volumetria
-- Base para consolidação
-
-### logs_consolidados
-Armazena dados agregados mensalmente:
-- Média
-- Máximo
-- Mínimo
-
-### Fluxo
-logs_historico → consolidação (30 dias) → logs_consolidados → expurgo (90 dias)
-
-Objetivo:
-- Reduzir uso de armazenamento
-- Melhorar performance de consulta
 
 ## **5. Regras de Manutenção e Performance**
 
