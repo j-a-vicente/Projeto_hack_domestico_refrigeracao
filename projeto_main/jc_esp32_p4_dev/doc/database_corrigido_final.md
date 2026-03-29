@@ -13,7 +13,7 @@ A transição de logs em arquivos de texto para um banco de dados relacional (SQ
 O diagrama abaixo ilustra como os componentes de hardware se relacionam entre si e com a estrutura de monitoramento e logs:
 
 
-
+```mermaid
 erDiagram
     OBJETO_TIPO ||--o{ OBJETOS : "categoriza (1:N)"
     OBJETOS ||--o{ OBJETOS : "hierarquia pai-filho (1:N)"
@@ -82,7 +82,10 @@ erDiagram
         INTEGER id_grupo FK
         INTEGER id_objeto FK
     }
+
 ```
+
+```mermaid
     OBJETO_TIPO ||--o{ OBJETOS : "categoriza (1:N)"
     OBJETOS ||--o{ OBJETOS : "hierarquia pai-filho (1:N)"
     OBJETOS ||--o{ OBJETO_MONITOR : "atua como executor (1:N)"
