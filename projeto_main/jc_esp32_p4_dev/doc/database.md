@@ -169,7 +169,6 @@ flowchart TD
 | `valor_maximo` | REAL | Maior valor registrado no período. |
 | `valor_minimo` | REAL | Menor valor registrado no período. |
 
----
 
 ### **Tabela: `configuracoes`** (Parâmetros Globais do Sistema)
 
@@ -178,6 +177,19 @@ flowchart TD
 | `id_config` | INTEGER (PK) | Identificador único do parâmetro. |
 | `sigla` | TEXT | Chave única usada no código C++ para buscar o valor (Ex: `IP_REDE`). |
 | `nome` | TEXT | Nome amigável para exibir no painel do WebServer. |
+| `descricao` | TEXT | Explicação detalhada do que este parâmetro faz no sistema. |
+| `valor` | TEXT | O valor da configuração (armazenado sempre como texto). |
+| `tipo_dado` | TEXT | Como o C++ deve ler o dado: `INT`, `FLOAT`, `STRING` ou `BOOL`. |
+| `dt_alteracao` | DATETIME | Data e hora da última modificação feita pelo usuário. |
+
+
+### **Tabela: `grupo_objetos`** (Grupo do objetos)
+A tabela será usado para grupos objetos que serão suados para executar a mesma tarefa em todos de uma fez.
+| Coluna | Tipo SQLite | Descrição |
+| --- | --- | --- |
+| `id_grupo_objetos` | INTEGER (PK) | Identificador único do grupo. |
+| `id_objeto` | INTEGER (FK) | Equipamento referente aos dados. |
+| `nome_grupo` | TEXT | Nome do grupo. |
 | `descricao` | TEXT | Explicação detalhada do que este parâmetro faz no sistema. |
 | `valor` | TEXT | O valor da configuração (armazenado sempre como texto). |
 | `tipo_dado` | TEXT | Como o C++ deve ler o dado: `INT`, `FLOAT`, `STRING` ou `BOOL`. |
@@ -269,6 +281,24 @@ CREATE TABLE IF NOT EXISTS configuracoes (
     tipo_dado TEXT NOT NULL,
     dt_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
     dt_alteracao DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+
+-- Criação da Tabela 1: grupo_objetos
+CREATE TABLE grupo_objetos (
+    id_grupos_objetos INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_objeto INTEGER,
+    nome_grupo TEXT,
+    FOREIGN KEY (id_objeto) REFERENCES objeto (id_objeto)
+);
+
+-- Criação da Tabela 2: objetos_agrupados
+CREATE TABLE objetos_agrupados (
+    id_objetos_agrupados INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_grupos_objetos INTEGER,
+    id_objeto INTEGER,
+    FOREIGN KEY (id_grupos_objetos) REFERENCES grupo_objetos (id_grupos_objetos),
+    FOREIGN KEY (id_objeto) REFERENCES objeto (id_objeto)
 );
 
 -- 2. Criação de Índices para Otimizar Buscas

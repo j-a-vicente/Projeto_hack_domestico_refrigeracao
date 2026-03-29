@@ -11,8 +11,8 @@
 
 
 // Definição dos pinos I2C
-#define I2C_MASTER_SDA_IO    7   
-#define I2C_MASTER_SCL_IO    8   
+#define I2C_MASTER_SDA_IO    32   
+#define I2C_MASTER_SCL_IO    33   
 #define PCA9685_ADDR         0x40
 
 
