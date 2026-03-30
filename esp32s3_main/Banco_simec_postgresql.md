@@ -256,8 +256,6 @@ O pipeline `pl_extract_tables` implementa um padrão moderno de ingestão de dad
 * Armazenamento em Data Lake
 * Processamento com Azure Databricks
 
-Ele garante flexibilidade, escalabilidade e facilidade de manutenção através do uso de configuração externa e execução dinâmica.
-
 ---
 
 
