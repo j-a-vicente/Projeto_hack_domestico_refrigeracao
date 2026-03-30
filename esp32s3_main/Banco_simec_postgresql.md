@@ -1,11 +1,3 @@
-Abaixo está a **documentação completa do pipeline `pl_extract_tables`**, consolidando:
-
-* Conteúdo do Word (descrição funcional) 
-* Estrutura técnica do pipeline (JSON exportado) 
-* Representação visual do pipeline (manifest) 
-
----
-
 # 📘 Documentação Técnica – Pipeline `pl_extract_tables`
 
 ## 1. Visão Geral
@@ -268,12 +260,4 @@ Ele garante flexibilidade, escalabilidade e facilidade de manutenção através 
 
 ---
 
-## 📎 Próximo passo (recomendado)
 
-Posso gerar isso para você em:
-
-* 📄 Documento Word formatado (com capa, sumário automático e imagens embutidas)
-* 📊 Versão padrão corporativa (modelo técnico)
-* 📐 Diagrama arquitetural mais detalhado
-
-Se quiser, me diga: **“gera o Word final”** que eu já te entrego o arquivo pronto para download.
