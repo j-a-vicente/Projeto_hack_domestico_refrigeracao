@@ -1,15 +1,22 @@
 // VARIÁVEL GLOBAL: Guarda a referência do loop para podermos cancelá-lo
 let kpiInterval = null; 
 
-// Carrega a página inicial automaticamente e inicia o relógio global da header
+// Carrega a página inicial ou a última página acessada e inicia o relógio global
 document.addEventListener("DOMContentLoaded", () => {
-    loadPage('home.html');
+    // Busca a última página salva. Se não existir (primeiro acesso), carrega a home.html
+    const ultimaPagina = localStorage.getItem('paginaAtiva') || 'home.html';
+    
+    loadPage(ultimaPagina);
     atualizarRelogioESP(); 
     setInterval(atualizarRelogioESP, 1000); 
 });
 
 function loadPage(pageName) {
     console.log("Tentando carregar:", pageName);
+    
+    // Salva a página atual no localStorage para sobreviver ao F5
+    localStorage.setItem('paginaAtiva', pageName);
+    
     const contentDiv = document.getElementById('content');
     
     contentDiv.innerHTML = "Carregando...";

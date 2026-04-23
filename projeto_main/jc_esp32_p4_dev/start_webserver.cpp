@@ -69,6 +69,57 @@ bool loadFromSD(String path) {
 // 3. Configuração do Servidor
 void setupWebServer() {
 
+// --- NOVA ROTA API: Retorna a Lista de Ativos do Banco de Dados ---
+  server.on("/api/ativos", HTTP_GET, []() {
+    String jsonResposta = "[";
+    bool first = true;
+    
+    if (db != nullptr) {
+      // Query solicitada para buscar os grupos e o status
+      const char* sql = "SELECT go.nome_grupo AS Ativos, ob.status_init AS Status "
+                        "FROM grupo_objetos AS go "
+                        "INNER JOIN objetos AS ob ON ob.id_objeto = go.id_objeto;";
+      
+      sqlite3_stmt* stmt;
+
+      if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) == SQLITE_OK) {
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+          if (!first) jsonResposta += ","; // Adiciona vírgula entre os itens do JSON
+          
+          String nome = String((const char*)sqlite3_column_text(stmt, 0));
+          int status = sqlite3_column_int(stmt, 1);
+          
+          jsonResposta += "{\"Ativos\":\"" + nome + "\", \"Status\":" + String(status) + "}";
+          first = false;
+        }
+        sqlite3_finalize(stmt);
+      } else {
+        Serial.printf("SQLite: Erro na API de Ativos: %s\n", sqlite3_errmsg(db));
+      }
+    }
+    jsonResposta += "]";
+
+    server.sendHeader("Access-Control-Allow-Origin", "*");
+    server.send(200, "application/json", jsonResposta);
+  });
+
+  // --- NOVA ROTA API: Retorna o Status da Placa Escrava (ESP32-S3) ---
+  server.on("/api/slave_status", HTTP_GET, []() {
+    // Como a Master está enviando dados para a Slave com sucesso via Serial1,
+    // você pode definir uma variável global que mude para false se houver timeout,
+    // mas por hora, vamos retornar true para sinalizar que a conexão via Serial está ativa.
+    bool s3_is_online = true; 
+    
+    String jsonResposta = "{\"online\": " + String(s3_is_online ? "true" : "false") + "}";
+    
+    server.sendHeader("Access-Control-Allow-Origin", "*");
+    server.send(200, "application/json", jsonResposta);
+  });
+
+
+
+
+
   // Rota para a comunicação com a ESP32-S3
   server.on("/api/power", HTTP_GET, handlePowerToggle);
 
@@ -145,7 +196,7 @@ void setupWebServer() {
     unsigned long uptimeSec = millis() / 1000;
 
     // Monta o JSON de resposta
-    String jsonResposta = "{\"status\":\"OPERACIONAL\", \"boot_time\":\"" + bootTime + "\", \"uptime_sec\":" + String(uptimeSec) + "}";
+    String jsonResposta = "{\"status\":\"ONLINE\", \"boot_time\":\"" + bootTime + "\", \"uptime_sec\":" + String(uptimeSec) + "}";
 
     server.sendHeader("Access-Control-Allow-Origin", "*");
     server.send(200, "application/json", jsonResposta);
